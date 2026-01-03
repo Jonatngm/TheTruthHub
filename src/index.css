@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Enhanced warm brown/chocolate spiritual palette */
+    --background: 35 20% 97%;
+    --foreground: 30 20% 12%;
+    
+    --card: 35 15% 99%;
+    --card-foreground: 30 20% 12%;
+    
+    --popover: 35 15% 99%;
+    --popover-foreground: 30 20% 12%;
+    
+    --primary: 25 55% 38%;
+    --primary-foreground: 35 5% 98%;
+    
+    --secondary: 30 25% 85%;
+    --secondary-foreground: 30 20% 15%;
+    
+    --muted: 35 18% 92%;
+    --muted-foreground: 30 12% 42%;
+    
+    --accent: 25 45% 50%;
+    --accent-foreground: 35 5% 98%;
+    
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 0 0% 98%;
+    
+    --border: 30 18% 84%;
+    --input: 30 18% 84%;
+    --ring: 25 55% 38%;
+    
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground font-serif;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+}
+
+@layer components {
+  .spiritual-gradient {
+    background: linear-gradient(135deg, hsl(28 38% 90%) 0%, hsl(25 32% 85%) 100%);
+  }
+}
