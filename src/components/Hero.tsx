@@ -15,7 +15,7 @@ export function Hero() {
           
           {/* Subtitle */}
           <p className="mt-8 text-center text-lg md:text-xl text-white/90 font-light max-w-2xl leading-relaxed">
-            A Christocentric platform exploring the nature of man, society, systems, and the cosmos through the lens of divine truth
+           Welcome to the Truth Hub Blog, a Christocentric platform aimed to reveal the Cosmic Christ to all and in all aspects. We present to you the Gospel of Love, that will not only mend your Soul unto eternal Peace, but will give you a new definition of Life; an everlasting assurance of triumph in all; through the Knowledge that is in Christ Jesus!
           </p>
         </div>
       </div>
