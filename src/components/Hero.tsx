@@ -10,7 +10,7 @@ export function Hero() {
           <img
             src="https://delighted-peach-bnqknau0kr.edgeone.app/photo_2026-01-05_05-27-49.jpg"
             alt="Truth Hub - Revealing the Cosmic Christ"
-            className="w-full max-w-6xl h-auto max-h-[90vh] object-contain drop-shadow-3xl transform transition-transform duration-400 hover:scale-105"
+            className="w-full max-w-6xl h-auto max-h-[90vh] object-contain drop-shadow-3xl transform transition-transform duration-700 hover:scale-105"
           />
           
           {/* Subtitle */}
