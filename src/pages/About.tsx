@@ -32,7 +32,7 @@ export function About() {
             </div>
           </section>
 
-          <section className="bg-card p-8 rounded-lg border border-border/60">
+          <section className="bg-[#DCCFC3] p-8 rounded-lg border border-border/60">
             <div className="flex items-start gap-4 mb-4">
               <Heart className="w-8 h-8 text-primary flex-shrink-0 mt-1" />
               <div>
