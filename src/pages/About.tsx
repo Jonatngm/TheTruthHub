@@ -2,7 +2,7 @@ import { Book, Heart, Cross } from 'lucide-react';
 
 export function About() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#EBE3DB]">
       <div className="container mx-auto px-4 py-16 max-w-3xl">
         <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-12 text-center">
           About The Truth Hub
