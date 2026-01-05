@@ -7,17 +7,11 @@ export function Hero() {
       {/* Content */}
       <div className="relative container mx-auto px-4 py-8 md:py-16 h-full flex flex-col items-center justify-center">
         <div className="max-w-4xl w-full flex flex-col items-center">
-          <div className="relative">
-            <img
-              src="https://delighted-peach-bnqknau0kr.edgeone.app/photo_2026-01-05_05-27-49.jpg"
-              alt="Truth Hub - Revealing the Cosmic Christ"
-              className="w-full max-w-6xl h-auto max-h-[70vh] object-contain drop-shadow-2xl transform transition-transform duration-300 hover:scale-105"
-            />
-            {/* Cross Watermark */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <span className="text-white/30 text-6xl md:text-8xl font-bold select-none">✝</span>
-            </div>
-          </div>
+          <img
+            src="https://delighted-peach-bnqknau0kr.edgeone.app/photo_2026-01-05_05-27-49.jpg"
+            alt="Truth Hub - Revealing the Cosmic Christ"
+            className="w-full max-w-6xl h-auto max-h-[70vh] object-contain drop-shadow-2xl transform transition-transform duration-300 hover:scale-105"
+          />
           
           {/* Subtitle */}
           <p className="mt-8 text-center text-xl md:text-2xl text-black italic max-w-2xl leading-relaxed">
