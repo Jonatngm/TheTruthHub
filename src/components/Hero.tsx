@@ -8,7 +8,7 @@ export function Hero() {
       <div className="relative container mx-auto px-4 py-20 md:py-32 flex flex-col items-center justify-center">
         <div className="max-w-4xl w-full flex flex-col items-center">
           <img
-            src="https://cdn-ai.onspace.ai/onspace/files/BBCNkfqLLLYkRHphzsum4m/pasted-image-1767366127868-1.png"
+            src="https://ibb.co/0Rr6PwkM"
             alt="Truth Hub - Revealing the Cosmic Christ"
             className="w-full max-w-3xl h-auto drop-shadow-2xl transform transition-transform duration-300 hover:scale-105"
           />
