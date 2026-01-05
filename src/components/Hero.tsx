@@ -6,11 +6,11 @@ export function Hero() {
       
       {/* Content */}
       <div className="relative container mx-auto px-4 py-8 md:py-16 h-full flex flex-col items-center justify-center">
-        <div className="max-w-4xl w-full flex flex-col items-center">
+        <div className="max-w-8xl w-full flex flex-col items-center">
           <img
             src="https://delighted-peach-bnqknau0kr.edgeone.app/photo_2026-01-05_05-27-49.jpg"
             alt="Truth Hub - Revealing the Cosmic Christ"
-            className="w-full max-w-6xl h-auto max-h-[90vh] object-contain drop-shadow-3xl transform transition-transform duration-700 hover:scale-105"
+            className="w-full max-w-6xl h-auto max-h-[90vh] object-contain drop-shadow-3xl transform transition-transform duration-700 hover:scale-100"
           />
           
           {/* Subtitle */}
