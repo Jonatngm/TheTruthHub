@@ -1,16 +1,16 @@
 export function Hero() {
   return (
-    <div className="relative w-full overflow-hidden">
+    <div className="relative w-full min-h-screen overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#8B7355] via-[#6B563F] to-background opacity-90" />
       
       {/* Content */}
-      <div className="relative container mx-auto px-4 py-20 md:py-32 flex flex-col items-center justify-center">
+      <div className="relative container mx-auto px-4 py-8 md:py-16 h-full flex flex-col items-center justify-center">
         <div className="max-w-4xl w-full flex flex-col items-center">
           <img
-            src="https://ibb.co/0Rr6PwkM"
+            src="https://elated-black-ipbtrsnri9.edgeone.app/photo_2026-01-05_03-57-19.jpg"
             alt="Truth Hub - Revealing the Cosmic Christ"
-            className="w-full max-w-3xl h-auto drop-shadow-2xl transform transition-transform duration-300 hover:scale-105"
+            className="w-full max-w-4xl h-auto max-h-[70vh] object-contain drop-shadow-2xl transform transition-transform duration-300 hover:scale-105"
           />
           
           {/* Subtitle */}
