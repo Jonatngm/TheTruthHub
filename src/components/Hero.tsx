@@ -9,7 +9,7 @@ export function Hero() {
         <div className="max-w-4xl w-full flex flex-col items-center">
           <div className="relative">
             <img
-              src="https://elated-black-ipbtrsnri9.edgeone.app/photo_2026-01-05_03-57-19.jpg"
+              src="https://secondary-red-4hpcxpdpin.edgeone.app/photo_2026-01-05_05-25-12.jpg"
               alt="Truth Hub - Revealing the Cosmic Christ"
               className="w-full max-w-4xl h-auto max-h-[70vh] object-contain drop-shadow-2xl transform transition-transform duration-300 hover:scale-105"
             />
