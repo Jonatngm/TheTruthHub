@@ -14,7 +14,7 @@ export function Hero() {
           />
           
           {/* Subtitle */}
-          <p className="mt-8 text-center text-xl md:text-2xl text-white italic max-w-2xl leading-relaxed">
+          <p className="mt-8 text-center text-xl md:text-2xl text-black italic max-w-2xl leading-relaxed">
            Welcome to the Truth Hub Blog, a Christocentric platform aimed to reveal the Cosmic Christ to all and in all aspects. We present to you the Gospel of Love, that will not only mend your Soul unto eternal Peace, but will give you a new definition of Life; an everlasting assurance of triumph in all things; through the Knowledge of Christ revealed to us!
           </p>
         </div>
