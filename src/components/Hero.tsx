@@ -9,9 +9,9 @@ export function Hero() {
         <div className="max-w-4xl w-full flex flex-col items-center">
           <div className="relative">
             <img
-              src="https://secondary-red-4hpcxpdpin.edgeone.app/photo_2026-01-05_05-25-12.jpg"
+              src="https://delighted-peach-bnqknau0kr.edgeone.app/photo_2026-01-05_05-27-49.jpg"
               alt="Truth Hub - Revealing the Cosmic Christ"
-              className="w-full max-w-4xl h-auto max-h-[70vh] object-contain drop-shadow-2xl transform transition-transform duration-300 hover:scale-105"
+              className="w-full max-w-6xl h-auto max-h-[70vh] object-contain drop-shadow-2xl transform transition-transform duration-300 hover:scale-105"
             />
             {/* Cross Watermark */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
