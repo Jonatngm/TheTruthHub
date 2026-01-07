@@ -35,7 +35,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   }
 
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/secret-login" replace />;
   }
 
   return <>{children}</>;
@@ -51,7 +51,9 @@ function AppRoutes() {
           <Route path="/post/:id" element={<PostDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
+          {/* Public /login is disabled; use /secret-login for the real login page */}
+          <Route path="/login" element={<Navigate to="/" replace />} />
+          <Route path="/secret-login" element={<Login />} />
           <Route
             path="/admin"
             element={
