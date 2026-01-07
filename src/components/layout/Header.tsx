@@ -71,14 +71,12 @@ export function Header() {
               </Button>
             </>
           ) : (
-            // Only show the login button when the user is on the secret login path
-            isActive('/secret-login') && (
-              <Link to="/secret-login">
-                <Button variant="default" size="sm">
-                  Login
-                </Button>
-              </Link>
-            )
+            // Show the login button for unsigned users (links to secret-login)
+            <Link to="/secret-login">
+              <Button variant="default" size="sm">
+                Login
+              </Button>
+            </Link>
           )}
         </div>
       </nav>
