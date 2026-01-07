@@ -136,7 +136,7 @@ export function Login() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   disabled={loading}
-                  placeholder="victor@truthhub.blog"
+                  placeholder=""
                 />
               </div>
               <Button type="submit" className="w-full" disabled={loading}>
