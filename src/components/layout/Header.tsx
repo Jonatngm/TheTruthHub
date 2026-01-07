@@ -72,7 +72,7 @@ export function Header() {
             </>
           ) : (
             // Show the login button for unsigned users (links to secret-login)
-            <Link to="/secret-login">
+            <Link to="/login">
               <Button variant="default" size="sm">
                 Login
               </Button>
