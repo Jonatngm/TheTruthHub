@@ -3,6 +3,7 @@ import { Calendar, BookOpen } from 'lucide-react';
 import { Post } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CategoryTags } from './CategoryTags';
+import { Eye } from 'lucide-react';
 
 interface PostCardProps {
   post: Post;
@@ -47,6 +48,12 @@ export function PostCard({ post }: PostCardProps) {
           <p className="text-muted-foreground line-clamp-3 leading-relaxed">
             {post.excerpt || post.content.substring(0, 150).replace(/<[^>]*>/g, '') + '...'}
           </p>
+          {typeof post.views !== 'undefined' && (
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Eye className="w-4 h-4" />
+              <span>{post.views}</span>
+            </div>
+          )}
           <CategoryTags categories={post.categories} tags={post.tags} />
         </CardContent>
       </Card>

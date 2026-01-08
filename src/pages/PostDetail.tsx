@@ -1,6 +1,7 @@
 import { useParams, Navigate, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { postService } from '@/lib/postService';
+import { useQueryClient } from '@tanstack/react-query';
 import { Calendar, Loader2, ArrowLeft, BookOpen } from 'lucide-react';
 import { CategoryTags } from '@/components/CategoryTags';
 import { Button } from '@/components/ui/button';
@@ -13,6 +14,27 @@ export function PostDetail() {
     queryKey: ['post', id],
     queryFn: () => postService.getPostById(id!),
     enabled: !!id,
+  });
+
+  const queryClient = useQueryClient();
+
+  // Increment view count when visiting the post detail
+  useQuery({
+    queryKey: ['increment-views', id],
+    queryFn: async () => {
+      if (!id) return null;
+      try {
+        const updated = await postService.incrementViews(id);
+        // update post cache
+        queryClient.setQueryData(['post', id], (old: any) => ({ ...(old || {}), ...(updated || {}) }));
+        // also update lists that may contain this post
+        queryClient.invalidateQueries({ queryKey: ['posts'] });
+        return updated;
+      } catch (e) {
+        return null;
+      }
+    },
+    enabled: !!id && !!post,
   });
 
   const { data: seriesPosts } = useQuery({

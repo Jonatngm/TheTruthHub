@@ -82,6 +82,30 @@ class PostService {
     };
   }
 
+  async incrementViews(id: string) {
+    // Read current views then increment (simple, may have race conditions)
+    const { data: row, error: selectError } = await supabase
+      .from('posts')
+      .select('views')
+      .eq('id', id)
+      .single();
+
+    if (selectError) throw selectError;
+
+    const current = (row && (row as any).views) || 0;
+
+    const { data, error } = await supabase
+      .from('posts')
+      .update({ views: current + 1 })
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) throw error;
+
+    return data;
+  }
+
   async getAllPosts() {
     const { data, error } = await supabase
       .from('posts')
