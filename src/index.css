@@ -4,6 +4,71 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Interaction and micro-animations (global) */
+:root{
+  --anim-duration-fast: 160ms;
+  --anim-duration-mid: 260ms;
+  --anim-duration-long: 420ms;
+  --ease-std: cubic-bezier(.2,.9,.2,1);
+  --shadow-elev-1: 0 4px 14px rgba(12,13,14,0.06);
+  --shadow-elev-2: 0 10px 30px rgba(12,13,14,0.08);
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+/* Base interactive helper - use on buttons, links, inputs */
+.interactive {
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--anim-duration-mid) var(--ease-std),
+              box-shadow var(--anim-duration-mid) var(--ease-std),
+              background-color var(--anim-duration-mid) var(--ease-std),
+              opacity var(--anim-duration-fast) var(--ease-std);
+  will-change: transform, box-shadow, opacity;
+  touch-action: manipulation;
+}
+
+.interactive:hover { transform: translateY(-3px) scale(1.01); box-shadow: var(--shadow-elev-1); }
+.interactive:active { transform: translateY(0) scale(0.985); box-shadow: none; }
+.interactive:focus-visible { outline: 3px solid rgba(59,130,246,0.18); outline-offset: 3px; }
+
+/* Elevated buttons */
+.interactive.elevated { box-shadow: var(--shadow-elev-1); }
+.interactive.elevated:hover { box-shadow: var(--shadow-elev-2); }
+
+/* Soft press feedback for touch devices */
+.interactive.touch-press { transition: transform var(--anim-duration-fast) var(--ease-std); }
+.interactive.touch-press:active { transform: scale(0.975); }
+
+/* Ripple container - buttons should have overflow hidden */
+.ripple { position: relative; overflow: hidden; }
+.ripple span.ripple-effect {
+  position: absolute; border-radius: 50%; transform: scale(0);
+  background: rgba(255,255,255,0.18); pointer-events: none; opacity: 0.95;
+  animation: ripple 600ms var(--ease-std);
+}
+@keyframes ripple { to { transform: scale(6); opacity: 0; } }
+
+/* Reveal on scroll */
+.reveal { opacity: 0; transform: translateY(12px) scale(0.995); transition: opacity var(--anim-duration-long) var(--ease-std), transform var(--anim-duration-long) var(--ease-std); }
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* Stagger helper via data attribute */
+.reveal[data-order] { transition-delay: calc(var(--order, 0) * 40ms); }
+
+/* Subtle entrance for images */
+.reveal-img { opacity: 0; transform: translateY(6px) scale(0.997); transition: opacity var(--anim-duration-long) var(--ease-std), transform var(--anim-duration-long) var(--ease-std); }
+.reveal-img.is-visible { opacity: 1; transform: none; }
+
+/* Accessibility: reduce motion careful fallback */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-img { transition: opacity 120ms linear; transform: none; }
+  .ripple span.ripple-effect { display: none; }
+}
+
+
 @layer base {
   :root {
     /* Enhanced warm brown/chocolate spiritual palette */
