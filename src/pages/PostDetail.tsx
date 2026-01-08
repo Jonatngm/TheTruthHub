@@ -115,20 +115,6 @@ export function PostDetail() {
       )}
 
       <article className="container mx-auto px-4 py-16 max-w-3xl">
-
-  return (
-    <div>
-      {post.cover_image && (
-        <div className="w-full h-72 md:h-96 mb-8 overflow-hidden">
-          <img
-            src={post.cover_image}
-            alt={post.title}
-            className="w-full h-full object-cover"
-          />
-        </div>
-      )}
-
-      <article className="container mx-auto px-4 py-16 max-w-3xl">
         <Link to="/">
           <Button variant="ghost" className="mb-8">
             <ArrowLeft className="w-4 h-4 mr-2" />
