@@ -2,6 +2,9 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'sonner';
 import { useAuth } from '@/hooks/useAuth';
+import { useEffect } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/lib/supabase';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Home } from '@/pages/Home';
@@ -45,6 +48,7 @@ function AppRoutes() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
+      <RealtimeSync />
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -84,6 +88,39 @@ function AppRoutes() {
       <Footer />
     </div>
   );
+}
+
+function RealtimeSync() {
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    const channel = supabase
+      .channel('public:posts')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'posts' },
+        (payload) => {
+          const newRow = payload?.new;
+          const oldRow = payload?.old;
+          if (!newRow) return;
+
+          // Update single post cache
+          queryClient.setQueryData(['post', newRow.id], (old: any) => ({ ...(old || {}), ...(newRow || {}) }));
+
+          // Invalidate or update lists containing posts
+          queryClient.invalidateQueries({ queryKey: ['posts'] });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      try {
+        channel.unsubscribe();
+      } catch (_) {}
+    };
+  }, [queryClient]);
+
+  return null;
 }
 
 function App() {
