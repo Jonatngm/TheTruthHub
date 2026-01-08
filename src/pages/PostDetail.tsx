@@ -35,11 +35,23 @@ export function PostDetail() {
     // If already recorded in localStorage, don't count again
     if (localStorage.getItem(key)) didView = true;
 
+    const anonKey = 'anonId';
+    let anonId = localStorage.getItem(anonKey);
+    if (!anonId) {
+      try {
+        anonId = (crypto as any).randomUUID ? (crypto as any).randomUUID() : Math.random().toString(36).slice(2);
+        localStorage.setItem(anonKey, anonId);
+      } catch (_) {
+        anonId = Math.random().toString(36).slice(2);
+        try { localStorage.setItem(anonKey, anonId); } catch (_) {}
+      }
+    }
+
     const markRead = async () => {
       if (didView) return;
       didView = true;
       try {
-        const updated = await postService.incrementViews(id);
+        const updated = await postService.incrementViews(id, { userId: user?.id ?? null, anonId: user?.id ? null : anonId });
         // update post cache
         queryClient.setQueryData(['post', id], (old: any) => ({ ...(old || {}), ...(updated || {}) }));
         queryClient.invalidateQueries({ queryKey: ['posts'] });

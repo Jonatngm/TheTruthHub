@@ -82,20 +82,22 @@ class PostService {
     };
   }
 
-  async incrementViews(id: string) {
-    // Prefer a DB-side RPC for atomic increment if available, fall back to select+update.
-    // Try atomic RPC first; if it exists it should increment and return the updated row.
+  async incrementViews(id: string, opts?: { userId?: string | null; anonId?: string | null }) {
+    // Prefer DB-side RPC for atomic unique view insertion.
+    const userId = opts?.userId ?? null;
+    const anonId = opts?.anonId ?? null;
+
     try {
-      const { data: rpcData, error: rpcError } = await supabase.rpc('increment_post_views', { post_id: id });
+      const { data: rpcData, error: rpcError } = await supabase.rpc('increment_unique_view', { p_post_id: id, p_user_id: userId, p_anon_id: anonId });
       if (!rpcError && rpcData) {
         if (Array.isArray(rpcData) && rpcData.length) return rpcData[0] as Post;
         return rpcData as Post;
       }
     } catch (e) {
-      // ignore rpc errors and fallback to select+update
+      // ignore rpc errors and fallback
     }
 
-    // Fallback: best-effort select then update (non-atomic)
+    // Fallback: avoid counting duplicates on client; do best-effort increment
     const { data: current, error: selectError } = await supabase
       .from<Post>('posts')
       .select('views')
