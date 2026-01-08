@@ -101,6 +101,20 @@ export function PostDetail() {
   };
 
   const contentWithLinks = linkScriptures(post.content);
+  return (
+    <div className="min-h-screen">
+      {/* Cover image */}
+      {post.cover_image && (
+        <div className="w-full h-72 md:h-96 mb-8 overflow-hidden">
+          <img
+            src={post.cover_image}
+            alt={post.title}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      )}
+
+      <article className="container mx-auto px-4 py-16 max-w-3xl">
 
   return (
     <div>
