@@ -45,15 +45,12 @@ export function PostCard({ post }: PostCardProps) {
             </CardTitle>
 
             {typeof post.views !== 'undefined' && (
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="ml-4 flex items-center gap-2 text-sm text-muted-foreground transition-transform hover:scale-105 cursor-pointer">
-                    <Eye className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-sm font-medium text-muted-foreground">{formatCount(post.views)}</span>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent side="top">{post.views.toLocaleString()} views</TooltipContent>
-              </Tooltip>
+              <div className="ml-4">
+                <div className="inline-flex items-center gap-2 bg-primary/6 text-primary px-3 py-1 rounded-full shadow-sm border border-primary/10">
+                  <Eye className="w-4 h-4" />
+                  <span className="text-sm font-semibold">{formatCount(post.views)}</span>
+                </div>
+              </div>
             )}
           </div>
 
