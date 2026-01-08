@@ -6,6 +6,10 @@ import { Calendar, Loader2, ArrowLeft, BookOpen, Eye } from 'lucide-react';
 import { CategoryTags } from '@/components/CategoryTags';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import { formatCount } from '@/lib/utils';
+import { supabase } from '@/lib/supabase';
+import { useEffect } from 'react';
 
 export function PostDetail() {
   const { id } = useParams<{ id: string }>();
@@ -18,24 +22,48 @@ export function PostDetail() {
 
   const queryClient = useQueryClient();
 
-  // Increment view count when visiting the post detail
-  useQuery({
-    queryKey: ['increment-views', id],
-    queryFn: async () => {
-      if (!id) return null;
+  // Optimistic increment + persist, and subscribe to realtime updates for this post
+  useEffect(() => {
+    if (!id || !post) return;
+
+    let isMounted = true;
+    const previous = queryClient.getQueryData(['post', id]);
+
+    (async () => {
+      // optimistic update
+      queryClient.setQueryData(['post', id], (old: any) => ({ ...(old || {}), views: ((old?.views as number) || 0) + 1 }));
       try {
         const updated = await postService.incrementViews(id);
-        // update post cache
-        queryClient.setQueryData(['post', id], (old: any) => ({ ...(old || {}), ...(updated || {}) }));
-        // also update lists that may contain this post
+        if (isMounted && updated) {
+          queryClient.setQueryData(['post', id], (old: any) => ({ ...(old || {}), ...(updated || {}) }));
+        }
         queryClient.invalidateQueries({ queryKey: ['posts'] });
-        return updated;
       } catch (e) {
-        return null;
+        // rollback on error
+        if (isMounted) queryClient.setQueryData(['post', id], previous);
+        queryClient.invalidateQueries({ queryKey: ['posts'] });
       }
-    },
-    enabled: !!id && !!post,
-  });
+    })();
+
+    // realtime subscription to keep counts in sync
+    const channel = supabase
+      .channel(`public:posts:id=eq.${id}`)
+      .on(
+        'postgres_changes',
+        { event: 'UPDATE', schema: 'public', table: 'posts', filter: `id=eq.${id}` },
+        (payload) => {
+          if (payload?.new) queryClient.setQueryData(['post', id], (old: any) => ({ ...(old || {}), ...(payload.new) }));
+        }
+      )
+      .subscribe();
+
+    return () => {
+      isMounted = false;
+      try {
+        channel.unsubscribe();
+      } catch (_) {}
+    };
+  }, [id, post]);
 
   const { data: seriesPosts } = useQuery({
     queryKey: ['seriesPosts', post?.series_id],
@@ -74,12 +102,17 @@ export function PostDetail() {
 
   const contentWithLinks = linkScriptures(post.content);
 
-  return (
-    <div className="min-h-screen bg-background">
-      {/* Cover Image */}
-      {post.cover_image && (
-        <div className="w-full h-64 md:h-96 overflow-hidden">
-          <img
+            {post.views !== undefined && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="ml-4 flex items-center gap-2 text-sm text-muted-foreground transition-transform hover:scale-105 cursor-pointer">
+                    <Eye className="w-5 h-5 text-muted-foreground" />
+                    <span className="text-sm font-medium text-muted-foreground">{formatCount(post.views)}</span>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent side="top">{post.views.toLocaleString()} views</TooltipContent>
+              </Tooltip>
+            )}
             src={post.cover_image}
             alt={post.title}
             className="w-full h-full object-cover"
@@ -174,11 +207,4 @@ export function PostDetail() {
       </article>
     </div>
   );
-}
-
-function formatCount(n?: number) {
-  if (n === undefined || n === null) return '';
-  if (n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
-  if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
-  return n.toLocaleString();
 }
