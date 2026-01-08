@@ -146,7 +146,6 @@ export function PostDetail() {
                 <span className="text-sm font-medium">{formatCount(post.views)}</span>
               </div>
             )}
-            </div>
           </div>
 
           {(post.categories || post.tags) && (
