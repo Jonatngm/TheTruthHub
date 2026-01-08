@@ -101,24 +101,16 @@ export function PostDetail() {
   };
 
   const contentWithLinks = linkScriptures(post.content);
-
-            {post.views !== undefined && (
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="ml-4 flex items-center gap-2 text-sm text-muted-foreground transition-transform hover:scale-105 cursor-pointer">
-                    <Eye className="w-5 h-5 text-muted-foreground" />
-                    <span className="text-sm font-medium text-muted-foreground">{formatCount(post.views)}</span>
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent side="top">{post.views.toLocaleString()} views</TooltipContent>
-              </Tooltip>
-            )}
-            src={post.cover_image}
-            alt={post.title}
-            className="w-full h-full object-cover"
-          />
-        </div>
-      )}
+  // Cover image
+  {post.cover_image && (
+    <div className="w-full h-72 md:h-96 mb-8 overflow-hidden">
+      <img
+        src={post.cover_image}
+        alt={post.title}
+        className="w-full h-full object-cover"
+      />
+    </div>
+  )}
 
       <article className="container mx-auto px-4 py-16 max-w-3xl">
         <Link to="/">

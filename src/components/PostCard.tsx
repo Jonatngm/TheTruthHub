@@ -4,6 +4,8 @@ import { Post } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CategoryTags } from './CategoryTags';
 import { Eye } from 'lucide-react';
+import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
+import { formatCount } from '@/lib/utils';
 
 interface PostCardProps {
   post: Post;
@@ -43,10 +45,15 @@ export function PostCard({ post }: PostCardProps) {
             </CardTitle>
 
             {typeof post.views !== 'undefined' && (
-              <div className="ml-4 flex items-center gap-2 text-sm text-muted-foreground">
-                <Eye className="w-4 h-4 text-muted-foreground" />
-                <span className="text-sm font-medium text-muted-foreground">{formatCount(post.views)}</span>
-              </div>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="ml-4 flex items-center gap-2 text-sm text-muted-foreground transition-transform hover:scale-105 cursor-pointer">
+                    <Eye className="w-4 h-4 text-muted-foreground" />
+                    <span className="text-sm font-medium text-muted-foreground">{formatCount(post.views)}</span>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent side="top">{post.views.toLocaleString()} views</TooltipContent>
+              </Tooltip>
             )}
           </div>
 
@@ -67,9 +74,3 @@ export function PostCard({ post }: PostCardProps) {
   );
 }
 
-function formatCount(n?: number) {
-  if (n === undefined || n === null) return '';
-  if (n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
-  if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
-  return n.toLocaleString();
-}
