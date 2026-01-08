@@ -9,7 +9,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import { formatCount } from '@/lib/utils';
 import { supabase } from '@/lib/supabase';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { useAuth } from '@/hooks/useAuth';
 
 export function PostDetail() {
   const { id } = useParams<{ id: string }>();
@@ -22,28 +23,61 @@ export function PostDetail() {
 
   const queryClient = useQueryClient();
 
-  // Optimistic increment + persist, and subscribe to realtime updates for this post
+  const { user } = useAuth();
+  const articleRef = useRef<HTMLElement | null>(null);
+
   useEffect(() => {
     if (!id || !post) return;
 
-    let isMounted = true;
-    const previous = queryClient.getQueryData(['post', id]);
+    let didView = false;
+    const key = `viewed:${id}:${user?.id || 'anon'}`;
 
-    (async () => {
-      // optimistic update
-      queryClient.setQueryData(['post', id], (old: any) => ({ ...(old || {}), views: ((old?.views as number) || 0) + 1 }));
+    // If already recorded in localStorage, don't count again
+    if (localStorage.getItem(key)) didView = true;
+
+    const markRead = async () => {
+      if (didView) return;
+      didView = true;
       try {
         const updated = await postService.incrementViews(id);
-        if (isMounted && updated) {
-          queryClient.setQueryData(['post', id], (old: any) => ({ ...(old || {}), ...(updated || {}) }));
-        }
+        // update post cache
+        queryClient.setQueryData(['post', id], (old: any) => ({ ...(old || {}), ...(updated || {}) }));
         queryClient.invalidateQueries({ queryKey: ['posts'] });
+        localStorage.setItem(key, '1');
       } catch (e) {
-        // rollback on error
-        if (isMounted) queryClient.setQueryData(['post', id], previous);
-        queryClient.invalidateQueries({ queryKey: ['posts'] });
+        // ignore errors; don't retry aggressively
       }
-    })();
+    };
+
+    // Click inside article
+    const onClick = (e: Event) => {
+      const target = e.target as Node;
+      if (!articleRef.current) return;
+      if (articleRef.current.contains(target)) markRead();
+    };
+
+    window.addEventListener('pointerdown', onClick, { passive: true });
+
+    // Scroll/read threshold: when 50% of article visible
+    let observer: IntersectionObserver | null = null;
+    if (articleRef.current) {
+      observer = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+            markRead();
+            if (observer) {
+              observer.disconnect();
+              observer = null;
+            }
+            break;
+          }
+        }
+      }, { threshold: [0.5] });
+      observer.observe(articleRef.current);
+    }
+
+    // Fallback: time on page (15s)
+    const timeout = window.setTimeout(() => markRead(), 15000);
 
     // realtime subscription to keep counts in sync
     const channel = supabase
@@ -58,12 +92,12 @@ export function PostDetail() {
       .subscribe();
 
     return () => {
-      isMounted = false;
-      try {
-        channel.unsubscribe();
-      } catch (_) {}
+      window.removeEventListener('pointerdown', onClick);
+      if (observer) observer.disconnect();
+      clearTimeout(timeout);
+      try { channel.unsubscribe(); } catch (_) {}
     };
-  }, [id, post]);
+  }, [id, post, user]);
 
   const { data: seriesPosts } = useQuery({
     queryKey: ['seriesPosts', post?.series_id],

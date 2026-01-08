@@ -2,7 +2,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { Cross } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
-import ReducedMotionToggle from '@/components/ReducedMotionToggle';
 
 export function Header() {
   const location = useLocation();
@@ -27,7 +26,7 @@ export function Header() {
         </Link>
 
         <div className="flex items-center gap-6">
-          <ReducedMotionToggle />
+          
           <Link
             to="/"
             className={`text-sm font-medium transition-colors hover:text-primary ${

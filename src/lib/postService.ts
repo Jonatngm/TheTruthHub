@@ -83,27 +83,38 @@ class PostService {
   }
 
   async incrementViews(id: string) {
-    // Read current views then increment (simple, may have race conditions)
-    const { data: row, error: selectError } = await supabase
-      .from('posts')
+    // Prefer a DB-side RPC for atomic increment if available, fall back to select+update.
+    // Try atomic RPC first; if it exists it should increment and return the updated row.
+    try {
+      const { data: rpcData, error: rpcError } = await supabase.rpc('increment_post_views', { post_id: id });
+      if (!rpcError && rpcData) {
+        if (Array.isArray(rpcData) && rpcData.length) return rpcData[0] as Post;
+        return rpcData as Post;
+      }
+    } catch (e) {
+      // ignore rpc errors and fallback to select+update
+    }
+
+    // Fallback: best-effort select then update (non-atomic)
+    const { data: current, error: selectError } = await supabase
+      .from<Post>('posts')
       .select('views')
       .eq('id', id)
       .single();
 
-    if (selectError) throw selectError;
+    if (selectError || !current) return null;
 
-    const current = (row && (row as any).views) || 0;
+    const newViews = (current.views || 0) + 1;
 
-    const { data, error } = await supabase
-      .from('posts')
-      .update({ views: current + 1 })
+    const { data: updated, error: updateError } = await supabase
+      .from<Post>('posts')
+      .update({ views: newViews })
       .eq('id', id)
       .select()
       .single();
 
-    if (error) throw error;
-
-    return data;
+    if (updateError || !updated) return null;
+    return updated as Post;
   }
 
   async getAllPosts() {
