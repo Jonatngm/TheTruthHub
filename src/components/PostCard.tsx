@@ -36,9 +36,20 @@ export function PostCard({ post }: PostCardProps) {
               {post.series_order && <span>• Part {post.series_order}</span>}
             </div>
           )}
-          <CardTitle className="text-2xl font-semibold text-foreground leading-tight line-clamp-2">
-            {post.title}
-          </CardTitle>
+
+          <div className="flex items-start justify-between">
+            <CardTitle className="text-2xl font-semibold text-foreground leading-tight line-clamp-2">
+              {post.title}
+            </CardTitle>
+
+            {typeof post.views !== 'undefined' && (
+              <div className="ml-4 flex items-center gap-2 text-sm text-muted-foreground">
+                <Eye className="w-4 h-4 text-muted-foreground" />
+                <span className="text-sm font-medium text-muted-foreground">{formatCount(post.views)}</span>
+              </div>
+            )}
+          </div>
+
           <div className="flex items-center gap-2 text-sm text-muted-foreground pt-2">
             <Calendar className="w-4 h-4" />
             <span>{formattedDate}</span>
@@ -48,15 +59,17 @@ export function PostCard({ post }: PostCardProps) {
           <p className="text-muted-foreground line-clamp-3 leading-relaxed">
             {post.excerpt || post.content.substring(0, 150).replace(/<[^>]*>/g, '') + '...'}
           </p>
-          {typeof post.views !== 'undefined' && (
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Eye className="w-4 h-4" />
-              <span>{post.views}</span>
-            </div>
-          )}
+          
           <CategoryTags categories={post.categories} tags={post.tags} />
         </CardContent>
       </Card>
     </Link>
   );
+}
+
+function formatCount(n?: number) {
+  if (n === undefined || n === null) return '';
+  if (n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+  if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+  return n.toLocaleString();
 }

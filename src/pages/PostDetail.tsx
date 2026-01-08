@@ -2,7 +2,7 @@ import { useParams, Navigate, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { postService } from '@/lib/postService';
 import { useQueryClient } from '@tanstack/react-query';
-import { Calendar, Loader2, ArrowLeft, BookOpen } from 'lucide-react';
+import { Calendar, Loader2, ArrowLeft, BookOpen, Eye } from 'lucide-react';
 import { CategoryTags } from '@/components/CategoryTags';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -115,6 +115,13 @@ export function PostDetail() {
               <Calendar className="w-5 h-5" />
               <time dateTime={post.created_at}>{formattedDate}</time>
             </div>
+            {typeof post.views !== 'undefined' && (
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <Eye className="w-5 h-5" />
+                <span className="text-sm font-medium">{formatCount(post.views)}</span>
+              </div>
+            )}
+            </div>
           </div>
 
           {(post.categories || post.tags) && (
@@ -167,4 +174,11 @@ export function PostDetail() {
       </article>
     </div>
   );
+}
+
+function formatCount(n?: number) {
+  if (n === undefined || n === null) return '';
+  if (n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+  if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+  return n.toLocaleString();
 }
