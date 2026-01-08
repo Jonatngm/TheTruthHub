@@ -1,0 +1,30 @@
+name: Run Supabase migration
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  run-migration:
+    name: Run DB migration (psql)
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.SUPABASE_DB_URL }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install psql
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+
+      - name: Run migration SQL
+        if: env.DATABASE_URL != ''
+        run: |
+          echo "Running migration: db/migrations/0001_increment_post_views.sql"
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f db/migrations/0001_increment_post_views.sql
+
+      - name: Fail if no DATABASE_URL
+        if: env.DATABASE_URL == ''
+        run: |
+          echo "Error: SUPABASE_DB_URL secret is not set. Add it in repository Secrets." && exit 1
