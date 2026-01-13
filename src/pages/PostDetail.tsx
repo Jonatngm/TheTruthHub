@@ -1,5 +1,6 @@
 import { useParams, Navigate, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { postService } from '@/lib/postService';
 import { useQueryClient } from '@tanstack/react-query';
 import { Calendar, Loader2, ArrowLeft, BookOpen, Eye } from 'lucide-react';
@@ -117,6 +118,13 @@ export function PostDetail() {
     enabled: !!post?.series_id,
   });
 
+  // Increment view count when post is loaded
+  useEffect(() => {
+    if (post?.id) {
+      postService.incrementViewCount(post.id);
+    }
+  }, [post?.id]);
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -206,7 +214,22 @@ export function PostDetail() {
 
         <div className="prose prose-lg max-w-none">
           <div
-            className="leading-relaxed"
+            className="leading-relaxed 
+              [&_p]:mb-4 [&_p]:min-h-[1.5em]
+              [&_h2]:mt-8 [&_h2]:mb-4 [&_h2]:font-bold [&_h2]:text-2xl
+              [&_h3]:mt-6 [&_h3]:mb-3 [&_h3]:font-bold [&_h3]:text-xl
+              [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6
+              [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:pl-6
+              [&_blockquote]:mb-4 [&_blockquote]:border-l-4 [&_blockquote]:border-primary [&_blockquote]:pl-4 [&_blockquote]:italic
+              [&_strong]:font-bold
+              [&_em]:italic
+              [&_u]:underline
+              [&_s]:line-through
+              [&_code]:bg-muted [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:font-mono [&_code]:text-sm
+              [&_.text-left]:text-left
+              [&_.text-center]:text-center
+              [&_.text-right]:text-right
+              [&_.text-justify]:text-justify"
             dangerouslySetInnerHTML={{ __html: contentWithLinks }}
           />
         </div>

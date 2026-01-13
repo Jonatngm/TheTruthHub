@@ -18,7 +18,7 @@ export interface Post {
   featured: boolean;
   scheduled_at: string | null;
   cover_image: string | null;
-  views?: number | null;
+  view_count: number;
   categories?: Category[];
   tags?: Tag[];
   series?: Series;

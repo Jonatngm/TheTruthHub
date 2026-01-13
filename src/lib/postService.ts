@@ -366,6 +366,16 @@ class PostService {
       tags: post.tags?.map((pt: any) => pt.tag) || [],
     }));
   }
+
+  async incrementViewCount(postId: string) {
+    const { error } = await supabase.rpc('increment_post_views', {
+      post_id: postId
+    });
+
+    if (error) {
+      console.error('Error incrementing view count:', error);
+    }
+  }
 }
 
 export const postService = new PostService();

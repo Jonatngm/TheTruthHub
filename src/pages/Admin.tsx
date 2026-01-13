@@ -59,12 +59,10 @@ export function Admin() {
                             </>
                           )}
                         </span>
-                        {typeof post.views !== 'undefined' && (
-                          <span className="flex items-center gap-1">
-                            <Eye className="w-4 h-4" />
-                            {post.views} {post.views === 1 ? 'view' : 'views'}
-                          </span>
-                        )}
+                        <span className="flex items-center gap-1">
+                          <Eye className="w-4 h-4" />
+                          {post.view_count || 0} views
+                        </span>
                       </div>
                     </div>
                     <Button
