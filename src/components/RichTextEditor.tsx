@@ -69,6 +69,25 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
             class: 'mb-4',
           },
         },
+        bulletList: {
+          keepMarks: true,
+          keepAttributes: false,
+          HTMLAttributes: {
+            class: 'list-disc',
+          },
+        },
+        orderedList: {
+          keepMarks: true,
+          keepAttributes: false,
+          HTMLAttributes: {
+            class: 'list-decimal',
+          },
+        },
+        listItem: {
+          HTMLAttributes: {
+            class: 'ml-0',
+          },
+        },
       }),
       Underline,
       TextAlign.configure({

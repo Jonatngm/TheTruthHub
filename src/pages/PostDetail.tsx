@@ -218,8 +218,11 @@ export function PostDetail() {
               [&_p]:mb-4 [&_p]:min-h-[1.5em]
               [&_h2]:mt-8 [&_h2]:mb-4 [&_h2]:font-bold [&_h2]:text-2xl
               [&_h3]:mt-6 [&_h3]:mb-3 [&_h3]:font-bold [&_h3]:text-xl
-              [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:pl-6
-              [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:pl-6
+              [&_ul]:mb-4 [&_ul]:mt-2 [&_ul]:list-disc [&_ul]:pl-8
+              [&_ol]:mb-4 [&_ol]:mt-2 [&_ol]:list-decimal [&_ol]:pl-8
+              [&_li]:mb-2
+              [&_ul_ul]:list-[circle] [&_ul_ul]:mt-2
+              [&_ul_ul_ul]:list-[square]
               [&_blockquote]:mb-4 [&_blockquote]:border-l-4 [&_blockquote]:border-primary [&_blockquote]:pl-4 [&_blockquote]:italic
               [&_strong]:font-bold
               [&_em]:italic
