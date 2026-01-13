@@ -197,16 +197,6 @@ export function PostDetail() {
                 )}
               </div>
             </div>
-
-            {typeof post.views !== 'undefined' && (
-              <div className="flex-shrink-0">
-                <div className="inline-flex items-center gap-3 bg-primary/6 text-primary px-4 py-2 rounded-full shadow-sm border border-primary/10">
-                  <Eye className="w-5 h-5" />
-                  <div className="text-lg md:text-xl font-semibold">{formatCount(post.views)}</div>
-                  <div className="text-xs text-muted-foreground">readers</div>
-                </div>
-              </div>
-            )}
           </div>
 
           {(post.categories || post.tags) && (
