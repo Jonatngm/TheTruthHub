@@ -22,12 +22,14 @@ export default function ReducedMotionToggle() {
   }, []);
 
   const toggle = () => {
-    const next = !Boolean(reduced);
+    const next = !reduced;
     setReduced(next);
     document.documentElement.setAttribute('data-reduced-motion', String(next));
     try {
       localStorage.setItem(STORAGE_KEY, String(next));
-    } catch (_) {}
+    } catch (error) {
+      // Ignore localStorage errors
+    }
   };
 
   if (reduced === null) return null;

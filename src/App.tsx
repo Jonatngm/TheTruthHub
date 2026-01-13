@@ -116,7 +116,9 @@ function RealtimeSync() {
     return () => {
       try {
         channel.unsubscribe();
-      } catch (_) {}
+      } catch (error) {
+        // Ignore unsubscribe errors
+      }
     };
   }, [queryClient]);
 
