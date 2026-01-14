@@ -58,15 +58,36 @@ img, video, iframe {
   }
 }
 
-/* Interaction and micro-animations (global) */
+/* Enhanced interaction and micro-animations */
 :root{
-  --anim-duration-fast: 140ms;
-  --anim-duration-mid: 220ms;
-  --anim-duration-long: 360ms;
+  --anim-duration-fast: 150ms;
+  --anim-duration-mid: 250ms;
+  --anim-duration-long: 400ms;
   --ease-std: cubic-bezier(.16,.84,.24,1);
   --ease-soft: cubic-bezier(.22,.8,.36,1);
-  --shadow-elev-1: 0 6px 18px rgba(12,13,14,0.06);
-  --shadow-elev-2: 0 14px 36px rgba(12,13,14,0.10);
+  --ease-bounce: cubic-bezier(.34,1.56,.64,1);
+  --shadow-elev-1: 0 2px 8px rgba(12,13,14,0.04), 0 4px 16px rgba(12,13,14,0.08);
+  --shadow-elev-2: 0 8px 24px rgba(12,13,14,0.08), 0 16px 48px rgba(12,13,14,0.12);
+  --shadow-elev-3: 0 12px 32px rgba(12,13,14,0.12), 0 24px 64px rgba(12,13,14,0.16);
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+/* Selection styling */
+::selection {
+  background-color: hsl(var(--primary) / 0.2);
+  color: hsl(var(--foreground));
+}
+
+/* Focus visible improvements */
+*:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 /* Respect prefers-reduced-motion */

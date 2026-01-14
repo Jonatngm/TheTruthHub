@@ -59,48 +59,59 @@ export function Home() {
     <div className="min-h-screen bg-[#EBE3DB]">
       <Hero />
 
-      <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-8 sm:py-10 md:py-12 lg:py-20">
-        {/* Search Bar */}
-        <div className="mb-10 sm:mb-12 md:mb-16 flex flex-col items-center gap-3 sm:gap-4">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-12 sm:py-16 md:py-20 lg:py-24">
+        {/* Search Bar with enhanced styling */}
+        <div className="mb-12 sm:mb-16 md:mb-20 flex flex-col items-center gap-4 sm:gap-6 animate-in slide-in-from-bottom-4 duration-500">
           <div className="w-full max-w-2xl">
             <SearchBar onSearch={handleSearch} />
           </div>
           
           {activeFilters && (
-            <Button variant="ghost" size="sm" onClick={clearFilters} className="text-xs sm:text-sm">
-              Clear filters
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={clearFilters} 
+              className="text-sm hover:bg-primary/10 hover:text-primary transition-all duration-200 shadow-sm"
+            >
+              Clear all filters
             </Button>
           )}
         </div>
 
-        {/* Featured Posts */}
+        {/* Featured Posts with enhanced section styling */}
         {!activeFilters && featuredPosts && featuredPosts.length > 0 && (
-          <section className="mb-12 sm:mb-16 md:mb-20">
-            <div className="flex items-center gap-2 sm:gap-3 mb-6 sm:mb-8 md:mb-10">
-              <div className="h-0.5 sm:h-1 w-8 sm:w-10 md:w-12 bg-primary rounded-full" />
-              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground flex items-center gap-2 sm:gap-3">
-                <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 text-primary" />
+          <section className="mb-16 sm:mb-20 md:mb-24 animate-in slide-in-from-bottom-6 duration-700">
+            <div className="flex items-center gap-3 sm:gap-4 mb-8 sm:mb-10 md:mb-12">
+              <div className="h-1 w-12 sm:w-16 bg-gradient-to-r from-primary to-primary/50 rounded-full" />
+              <div className="h-1 w-12 sm:w-16 bg-gradient-to-r from-primary to-primary/50 rounded-full" />
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground flex items-center gap-3 sm:gap-4">
+                <BookOpen className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-primary" />
                 Featured Teachings
               </h2>
             </div>
-            <div className="grid gap-4 sm:gap-6 md:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-              {featuredPosts.map((post) => (
-                <PostCard key={post.id} post={post} />
+            <div className="grid gap-6 sm:gap-8 md:gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+              {featuredPosts.map((post, index) => (
+                <div key={post.id} className="animate-in slide-in-from-bottom-8 duration-700" style={{ animationDelay: `${index * 100}ms` }}>
+                  <PostCard post={post} />
+                </div>
               ))}
             </div>
           </section>
         )}
 
-        {/* Categories Filter */}
+        {/* Categories Filter with refined buttons */}
         {!activeFilters && categories && categories.length > 0 && (
-          <section className="mb-10 sm:mb-12 md:mb-16">
-            <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-foreground mb-4 sm:mb-5 md:mb-6">Browse by Category</h3>
-            <div className="flex flex-wrap gap-2 sm:gap-2.5 md:gap-3">
+          <section className="mb-12 sm:mb-16 md:mb-20 animate-in slide-in-from-bottom-6 duration-700 delay-200">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6 sm:mb-8 flex items-center gap-3">
+              <div className="h-1 w-8 bg-primary rounded-full" />
+              Browse by Category
+            </h3>
+            <div className="flex flex-wrap gap-2.5 sm:gap-3">
               {categories.map((category) => (
                 <Button
                   key={category.id}
                   variant="outline"
-                  className="hover:bg-primary hover:text-primary-foreground transition-colors"
+                  className="hover:bg-primary hover:text-primary-foreground hover:shadow-md hover:scale-105 transition-all duration-200 border-border/60 font-medium"
                   onClick={() => setSearchParams({ category: category.slug })}
                 >
                   {category.name}
@@ -110,16 +121,19 @@ export function Home() {
           </section>
         )}
 
-        {/* Series Filter */}
+        {/* Series Filter with refined buttons */}
         {!activeFilters && series && series.length > 0 && (
-          <section className="mb-16">
-            <h3 className="text-xl md:text-2xl font-semibold text-foreground mb-6">Teaching Series</h3>
-            <div className="flex flex-wrap gap-3">
+          <section className="mb-16 sm:mb-20 md:mb-24 animate-in slide-in-from-bottom-6 duration-700 delay-300">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6 sm:mb-8 flex items-center gap-3">
+              <div className="h-1 w-8 bg-primary rounded-full" />
+              Teaching Series
+            </h3>
+            <div className="flex flex-wrap gap-2.5 sm:gap-3">
               {series.map((s) => (
                 <Button
                   key={s.id}
                   variant="outline"
-                  className="hover:bg-primary hover:text-primary-foreground transition-colors"
+                  className="hover:bg-primary hover:text-primary-foreground hover:shadow-md hover:scale-105 transition-all duration-200 border-border/60 font-medium"
                   onClick={() => setSearchParams({ series: s.slug })}
                 >
                   {s.title}
@@ -130,10 +144,11 @@ export function Home() {
         )}
 
         {/* All Posts */}
-        <section>
-          <div className="flex items-center gap-2 sm:gap-3 mb-6 sm:mb-8 md:mb-10">
-            <div className="h-0.5 sm:h-1 w-8 sm:w-10 md:w-12 bg-primary rounded-full" />
-            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
+        <section className="animate-in slide-in-from-bottom-8 duration-700 delay-400">
+          <div className="flex items-center gap-3 sm:gap-4 mb-8 sm:mb-10 md:mb-12">
+            <div className="h-1 w-12 sm:w-16 bg-gradient-to-r from-primary to-primary/50 rounded-full" />
+            <div className="h-1 w-12 sm:w-16 bg-gradient-to-r from-primary to-primary/50 rounded-full" />
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground capitalize">
               {categorySlug && 'Category: ' + categorySlug.replace(/-/g, ' ')}
               {tagSlug && 'Tag: ' + tagSlug.replace(/-/g, ' ')}
               {seriesSlug && 'Series: ' + seriesSlug.replace(/-/g, ' ')}
@@ -143,21 +158,36 @@ export function Home() {
           </div>
 
           {postsLoading ? (
-            <div className="flex justify-center py-8 sm:py-10 md:py-12">
-              <Loader2 className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 animate-spin text-primary" />
+            <div className="flex justify-center py-16 sm:py-20 md:py-24">
+              <div className="flex flex-col items-center gap-4">
+                <Loader2 className="w-8 h-8 sm:w-10 sm:h-10 animate-spin text-primary" />
+                <p className="text-sm text-muted-foreground">Loading teachings...</p>
+              </div>
             </div>
           ) : posts && posts.length > 0 ? (
-            <div className="grid gap-4 sm:gap-6 md:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-              {posts.map((post) => (
-                <PostCard key={post.id} post={post} />
+            <div className="grid gap-6 sm:gap-8 md:gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+              {posts.map((post, index) => (
+                <div key={post.id} className="animate-in slide-in-from-bottom-8 duration-700" style={{ animationDelay: `${index * 100}ms` }}>
+                  <PostCard post={post} />
+                </div>
               ))}
             </div>
           ) : (
-            <Card className="border-border/60">
-              <CardContent className="py-8 sm:py-10 md:py-12 text-center px-4">
-                <p className="text-sm sm:text-base text-muted-foreground">
-                  {searchQuery ? 'No teachings found matching your search.' : 'No teachings available yet.'}
-                </p>
+            <Card className="border-border/60 shadow-md">
+              <CardContent className="py-12 sm:py-16 md:py-20 text-center px-6">
+                <div className="max-w-md mx-auto space-y-4">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-primary/10 flex items-center justify-center">
+                    <BookOpen className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
+                  </div>
+                  <p className="text-base sm:text-lg text-muted-foreground font-medium">
+                    {searchQuery ? 'No teachings found matching your search.' : 'No teachings available yet.'}
+                  </p>
+                  {searchQuery && (
+                    <Button variant="outline" onClick={() => { setSearchQuery(''); setSearchParams({}); }} className="mt-4">
+                      Clear search
+                    </Button>
+                  )}
+                </div>
               </CardContent>
             </Card>
           )}
