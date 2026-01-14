@@ -46,7 +46,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
 function AppRoutes() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen overflow-x-hidden w-full">
       <Header />
       <RealtimeSync />
       <main className="flex-1">

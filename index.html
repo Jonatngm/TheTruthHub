@@ -3,7 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     
     <!-- SEO Meta Tags -->
     <title>The Truth Hub - A Christocentric Exploration of Truth</title>
@@ -38,6 +42,20 @@
       "description": "A Christocentric platform aimed to reveal the Cosmic Christ to all and in all aspects. We present to you the Gospel of Love, that will not only mend your Soul unto eternal Peace, but will give you a new definition of Life; an everlasting assurance of triumph in all things; through the Knowledge of Christ revealed to us!"
     }
     </script>
+    <style>
+      /* Critical mobile rendering fix */
+      html, body {
+        width: 100%;
+        overflow-x: hidden;
+        margin: 0;
+        padding: 0;
+      }
+      #root {
+        width: 100%;
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

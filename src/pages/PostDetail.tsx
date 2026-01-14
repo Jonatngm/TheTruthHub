@@ -215,23 +215,26 @@ export function PostDetail() {
           )}
         </header>
 
-        <div className="prose prose-sm sm:prose-base md:prose-lg max-w-none">
+        <div className="prose prose-sm sm:prose-base md:prose-lg max-w-none overflow-hidden">
           <div
-            className="leading-relaxed 
-              [&_p]:mb-3 [&_p]:sm:mb-4 [&_p]:min-h-[1.5em] [&_p]:text-sm [&_p]:sm:text-base
-              [&_h2]:mt-6 [&_h2]:sm:mt-8 [&_h2]:mb-3 [&_h2]:sm:mb-4 [&_h2]:font-bold [&_h2]:text-xl [&_h2]:sm:text-2xl
-              [&_h3]:mt-4 [&_h3]:sm:mt-6 [&_h3]:mb-2 [&_h3]:sm:mb-3 [&_h3]:font-bold [&_h3]:text-lg [&_h3]:sm:text-xl
+            className="leading-relaxed overflow-hidden
+              [&_p]:mb-3 [&_p]:sm:mb-4 [&_p]:min-h-[1.5em] [&_p]:text-sm [&_p]:sm:text-base [&_p]:break-words
+              [&_h2]:mt-6 [&_h2]:sm:mt-8 [&_h2]:mb-3 [&_h2]:sm:mb-4 [&_h2]:font-bold [&_h2]:text-xl [&_h2]:sm:text-2xl [&_h2]:break-words
+              [&_h3]:mt-4 [&_h3]:sm:mt-6 [&_h3]:mb-2 [&_h3]:sm:mb-3 [&_h3]:font-bold [&_h3]:text-lg [&_h3]:sm:text-xl [&_h3]:break-words
               [&_ul]:mb-3 [&_ul]:sm:mb-4 [&_ul]:mt-2 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:sm:pl-8
               [&_ol]:mb-3 [&_ol]:sm:mb-4 [&_ol]:mt-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:sm:pl-8
-              [&_li]:mb-2 [&_li]:text-sm [&_li]:sm:text-base
+              [&_li]:mb-2 [&_li]:text-sm [&_li]:sm:text-base [&_li]:break-words
               [&_ul_ul]:list-[circle] [&_ul_ul]:mt-2
               [&_ul_ul_ul]:list-[square]
-              [&_blockquote]:mb-3 [&_blockquote]:sm:mb-4 [&_blockquote]:border-l-4 [&_blockquote]:border-primary [&_blockquote]:pl-3 [&_blockquote]:sm:pl-4 [&_blockquote]:italic [&_blockquote]:text-sm [&_blockquote]:sm:text-base
+              [&_blockquote]:mb-3 [&_blockquote]:sm:mb-4 [&_blockquote]:border-l-4 [&_blockquote]:border-primary [&_blockquote]:pl-3 [&_blockquote]:sm:pl-4 [&_blockquote]:italic [&_blockquote]:text-sm [&_blockquote]:sm:text-base [&_blockquote]:break-words
               [&_strong]:font-bold
               [&_em]:italic
               [&_u]:underline
               [&_s]:line-through
-              [&_code]:bg-muted [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:font-mono [&_code]:text-sm
+              [&_code]:bg-muted [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:font-mono [&_code]:text-sm [&_code]:break-all
+              [&_pre]:overflow-x-auto [&_pre]:max-w-full
+              [&_img]:max-w-full [&_img]:h-auto
+              [&_table]:block [&_table]:overflow-x-auto [&_table]:max-w-full
               [&_.text-left]:text-left
               [&_.text-center]:text-center
               [&_.text-right]:text-right
