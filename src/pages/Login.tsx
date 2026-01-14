@@ -23,13 +23,28 @@ export function Login() {
 
   // Handle magic link authentication
   useEffect(() => {
-    supabase.auth.onAuthStateChange((event, session) => {
+    // Check for existing session first
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        login(authService.mapUser(session.user));
+        toast.success('Successfully logged in!');
+        navigate('/admin');
+      }
+    });
+
+    // Listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN' && session) {
         login(authService.mapUser(session.user));
         toast.success('Successfully logged in!');
         navigate('/admin');
       }
     });
+
+    // Cleanup subscription
+    return () => {
+      subscription.unsubscribe();
+    };
   }, [navigate, login]);
 
   const handleLogin = async (e: React.FormEvent) => {
