@@ -28,7 +28,7 @@ class AuthService {
       email,
       options: { 
         shouldCreateUser: true,
-        emailRedirectTo: window.location.origin + '/login'
+        emailRedirectTo: window.location.origin + '/admin'
       },
     });
     if (error) throw error;

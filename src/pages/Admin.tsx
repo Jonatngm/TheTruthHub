@@ -1,12 +1,28 @@
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import { postService } from '@/lib/postService';
+import { authService } from '@/lib/authService';
+import { supabase } from '@/lib/supabase';
+import { useAuthStore } from '@/stores/authStore';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PenSquare, Loader2, Eye, EyeOff } from 'lucide-react';
+import { toast } from 'sonner';
 
 export function Admin() {
   const navigate = useNavigate();
+  const { login } = useAuthStore();
+
+  // Handle magic link authentication on page load
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        login(authService.mapUser(session.user));
+        toast.success('Successfully logged in!');
+      }
+    });
+  }, [login]);
 
   const { data: posts, isLoading } = useQuery({
     queryKey: ['allPosts'],
