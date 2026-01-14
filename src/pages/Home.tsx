@@ -56,7 +56,7 @@ export function Home() {
   const activeFilters = categorySlug || tagSlug || seriesSlug || searchQuery;
 
   return (
-    <div className="min-h-screen bg-[#EBE3DB]">
+    <div className="min-h-screen bg-[#FBFBFA]">
       <Hero />
 
       <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-12 sm:py-16 md:py-20 lg:py-24">
