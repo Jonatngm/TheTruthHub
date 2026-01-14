@@ -279,10 +279,10 @@ export function PostDetail() {
           </div>
         )}
 
-        {/* Comments Section */}
-        <div className="mt-8 sm:mt-10 md:mt-12">
+        {/* Comments Section - Temporarily hidden */}
+        {/* <div className="mt-8 sm:mt-10 md:mt-12">
           <Comments postId={post.id} />
-        </div>
+        </div> */}
       </article>
     </div>
   );
