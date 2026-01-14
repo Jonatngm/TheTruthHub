@@ -5,12 +5,13 @@ import { postService } from '@/lib/postService';
 import { useQueryClient } from '@tanstack/react-query';
 import { Calendar, Loader2, ArrowLeft, BookOpen, Eye } from 'lucide-react';
 import { CategoryTags } from '@/components/CategoryTags';
+import { Comments } from '@/components/Comments';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tooltip, TooltipTrigger, TooltipContent } from '@/components/ui/tooltip';
 import { formatCount } from '@/lib/utils';
 import { supabase } from '@/lib/supabase';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 
 export function PostDetail() {
@@ -272,6 +273,9 @@ export function PostDetail() {
             </div>
           </div>
         )}
+
+        {/* Comments Section */}
+        <Comments postId={post.id} />
       </article>
     </div>
   );

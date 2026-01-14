@@ -1,5 +1,5 @@
 import { supabase } from './supabase';
-import { Post, PostFormData } from '@/types';
+import { Post, PostFormData, Comment } from '@/types';
 
 class PostService {
   async getPublishedPosts(options?: {
@@ -375,6 +375,38 @@ class PostService {
     if (error) {
       console.error('Error incrementing view count:', error);
     }
+  }
+
+  // Comment methods
+  async getCommentsByPostId(postId: string) {
+    const { data, error } = await supabase
+      .from('comments')
+      .select('*')
+      .eq('post_id', postId)
+      .eq('approved', true)
+      .order('created_at', { ascending: true });
+
+    if (error) throw error;
+    return data || [];
+  }
+
+  async createComment(commentData: {
+    post_id: string;
+    author_name: string;
+    author_email: string;
+    content: string;
+  }) {
+    const { data, error } = await supabase
+      .from('comments')
+      .insert({
+        ...commentData,
+        approved: false, // Comments need approval by default
+      })
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
   }
 }
 

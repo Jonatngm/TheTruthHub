@@ -61,3 +61,13 @@ export interface Series {
   user_id: string;
   created_at: string;
 }
+
+export interface Comment {
+  id: string;
+  post_id: string;
+  author_name: string;
+  author_email: string;
+  content: string;
+  created_at: string;
+  approved: boolean;
+}
