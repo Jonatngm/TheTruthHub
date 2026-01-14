@@ -160,7 +160,7 @@ export function PostDetail() {
     <div className="min-h-screen">
       {/* Cover image */}
       {post.cover_image && (
-        <div className="w-full h-72 md:h-96 mb-8 overflow-hidden">
+        <div className="w-full h-48 sm:h-64 md:h-72 lg:h-96 mb-6 sm:mb-8 overflow-hidden">
           <img
             src={post.cover_image}
             alt={post.title}
@@ -169,18 +169,18 @@ export function PostDetail() {
         </div>
       )}
 
-      <article className="container mx-auto px-4 py-16 max-w-3xl">
+      <article ref={articleRef} className="container mx-auto px-3 sm:px-4 md:px-6 py-8 sm:py-12 md:py-16 max-w-3xl">
         <Link to="/">
-          <Button variant="ghost" className="mb-8">
-            <ArrowLeft className="w-4 h-4 mr-2" />
+          <Button variant="ghost" className="mb-6 sm:mb-8 text-sm sm:text-base">
+            <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
             Back to teachings
           </Button>
         </Link>
 
-        <header className="mb-12">
+        <header className="mb-8 sm:mb-10 md:mb-12">
           {post.series && (
-            <div className="flex items-center gap-2 text-primary mb-4">
-              <BookOpen className="w-5 h-5" />
+            <div className="flex items-center gap-2 text-primary mb-3 sm:mb-4 text-sm sm:text-base">
+              <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />
               <span className="font-medium">{post.series.title}</span>
               {post.series_order && (
                 <span className="text-muted-foreground">• Part {post.series_order}</span>
@@ -188,15 +188,15 @@ export function PostDetail() {
             </div>
           )}
 
-          <div className="flex items-start justify-between gap-6 mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-6 mb-4 sm:mb-6">
             <div className="flex-1">
-              <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 leading-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 sm:mb-4 leading-tight">
                 {post.title}
               </h1>
 
-              <div className="flex flex-wrap items-center gap-4 text-muted-foreground">
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
                 <div className="flex items-center gap-2">
-                  <Calendar className="w-5 h-5" />
+                  <Calendar className="w-4 h-4 sm:w-5 sm:h-5" />
                   <time dateTime={post.created_at}>{formattedDate}</time>
                 </div>
                 {(post.categories || post.tags) && (
@@ -209,22 +209,24 @@ export function PostDetail() {
           </div>
 
           {(post.categories || post.tags) && (
-            <CategoryTags categories={post.categories} tags={post.tags} clickable />
+            <div className="mt-3 sm:mt-4">
+              <CategoryTags categories={post.categories} tags={post.tags} clickable />
+            </div>
           )}
         </header>
 
-        <div className="prose prose-lg max-w-none">
+        <div className="prose prose-sm sm:prose-base md:prose-lg max-w-none">
           <div
             className="leading-relaxed 
-              [&_p]:mb-4 [&_p]:min-h-[1.5em]
-              [&_h2]:mt-8 [&_h2]:mb-4 [&_h2]:font-bold [&_h2]:text-2xl
-              [&_h3]:mt-6 [&_h3]:mb-3 [&_h3]:font-bold [&_h3]:text-xl
-              [&_ul]:mb-4 [&_ul]:mt-2 [&_ul]:list-disc [&_ul]:pl-8
-              [&_ol]:mb-4 [&_ol]:mt-2 [&_ol]:list-decimal [&_ol]:pl-8
-              [&_li]:mb-2
+              [&_p]:mb-3 [&_p]:sm:mb-4 [&_p]:min-h-[1.5em] [&_p]:text-sm [&_p]:sm:text-base
+              [&_h2]:mt-6 [&_h2]:sm:mt-8 [&_h2]:mb-3 [&_h2]:sm:mb-4 [&_h2]:font-bold [&_h2]:text-xl [&_h2]:sm:text-2xl
+              [&_h3]:mt-4 [&_h3]:sm:mt-6 [&_h3]:mb-2 [&_h3]:sm:mb-3 [&_h3]:font-bold [&_h3]:text-lg [&_h3]:sm:text-xl
+              [&_ul]:mb-3 [&_ul]:sm:mb-4 [&_ul]:mt-2 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:sm:pl-8
+              [&_ol]:mb-3 [&_ol]:sm:mb-4 [&_ol]:mt-2 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:sm:pl-8
+              [&_li]:mb-2 [&_li]:text-sm [&_li]:sm:text-base
               [&_ul_ul]:list-[circle] [&_ul_ul]:mt-2
               [&_ul_ul_ul]:list-[square]
-              [&_blockquote]:mb-4 [&_blockquote]:border-l-4 [&_blockquote]:border-primary [&_blockquote]:pl-4 [&_blockquote]:italic
+              [&_blockquote]:mb-3 [&_blockquote]:sm:mb-4 [&_blockquote]:border-l-4 [&_blockquote]:border-primary [&_blockquote]:pl-3 [&_blockquote]:sm:pl-4 [&_blockquote]:italic [&_blockquote]:text-sm [&_blockquote]:sm:text-base
               [&_strong]:font-bold
               [&_em]:italic
               [&_u]:underline
@@ -240,29 +242,29 @@ export function PostDetail() {
 
         {/* Series Posts */}
         {seriesPosts && seriesPosts.length > 1 && (
-          <div className="mt-16">
-            <h2 className="text-2xl font-bold text-foreground mb-6">
+          <div className="mt-12 sm:mt-14 md:mt-16">
+            <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">
               More from this series
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {seriesPosts
                 .filter((p) => p.id !== post.id)
                 .map((p) => (
                   <Link key={p.id} to={`/post/${p.id}`}>
                     <Card className="hover:shadow-lg transition-shadow border-border/60">
                       <CardHeader>
-                        <CardTitle className="text-lg flex items-center gap-3">
+                        <CardTitle className="text-base sm:text-lg flex items-center gap-2 sm:gap-3">
                           {p.series_order && (
-                            <span className="text-primary font-bold">
+                            <span className="text-primary font-bold flex-shrink-0">
                               {p.series_order}.
                             </span>
                           )}
-                          {p.title}
+                          <span className="line-clamp-2">{p.title}</span>
                         </CardTitle>
                       </CardHeader>
                       {p.excerpt && (
                         <CardContent>
-                          <p className="text-muted-foreground text-sm line-clamp-2">
+                          <p className="text-muted-foreground text-xs sm:text-sm line-clamp-2">
                             {p.excerpt}
                           </p>
                         </CardContent>
@@ -275,7 +277,9 @@ export function PostDetail() {
         )}
 
         {/* Comments Section */}
-        <Comments postId={post.id} />
+        <div className="mt-8 sm:mt-10 md:mt-12">
+          <Comments postId={post.id} />
+        </div>
       </article>
     </div>
   );

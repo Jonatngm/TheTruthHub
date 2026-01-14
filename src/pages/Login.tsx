@@ -14,11 +14,10 @@ export function Login() {
   const navigate = useNavigate();
   const { login } = useAuthStore();
   const [loading, setLoading] = useState(false);
-  const [step, setStep] = useState<'login' | 'register' | 'otp'>('login');
+  const [step, setStep] = useState<'login' | 'register'>('login');
   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [otp, setOtp] = useState('');
   const [username, setUsername] = useState('');
 
   // Handle magic link authentication
@@ -65,21 +64,6 @@ export function Login() {
     }
   };
 
-  const handleSendOtp = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      await authService.sendOtp(email);
-      toast.success('Verification code sent to your email');
-      setStep('otp');
-    } catch (error: any) {
-      toast.error(error.message || 'Failed to send verification code');
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -105,24 +89,24 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted/30 px-4 py-12">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted/30 px-3 sm:px-4 md:px-6 py-8 sm:py-10 md:py-12">
       <Card className="w-full max-w-md border-border/60">
-        <CardHeader className="text-center space-y-4">
+        <CardHeader className="text-center space-y-3 sm:space-y-4 px-4 sm:px-6">
           <div className="flex justify-center">
-            <div className="bg-primary/10 p-3 rounded-full">
-              <Cross className="w-8 h-8 text-primary" />
+            <div className="bg-primary/10 p-2 sm:p-3 rounded-full">
+              <Cross className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-primary" />
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold">Admin Access</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-xl sm:text-2xl font-bold">Admin Access</CardTitle>
+          <CardDescription className="text-xs sm:text-sm">
             Sign in to manage teachings
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-4 sm:px-6 pb-6 sm:pb-8">
           {step === 'login' && (
-            <form onSubmit={handleLogin} className="space-y-4">
+            <form onSubmit={handleLogin} className="space-y-3 sm:space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email" className="text-sm">Email</Label>
                 <Input
                   id="email"
                   type="email"
@@ -131,10 +115,11 @@ export function Login() {
                   required
                   disabled={loading}
                   placeholder="your@email.com"
+                  className="text-sm sm:text-base"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password" className="text-sm">Password</Label>
                 <Input
                   id="password"
                   type="password"
@@ -143,17 +128,18 @@ export function Login() {
                   required
                   disabled={loading}
                   placeholder="Enter your password"
+                  className="text-sm sm:text-base"
                 />
               </div>
-              <Button type="submit" className="w-full" disabled={loading}>
-                {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              <Button type="submit" className="w-full text-sm sm:text-base" disabled={loading}>
+                {loading && <Loader2 className="mr-2 h-3 w-3 sm:h-4 sm:w-4 animate-spin" />}
                 Sign In
               </Button>
-              <div className="text-center mt-4">
+              <div className="text-center mt-3 sm:mt-4">
                 <button
                   type="button"
                   onClick={() => setStep('register')}
-                  className="text-sm text-primary hover:underline"
+                  className="text-xs sm:text-sm text-primary hover:underline"
                   disabled={loading}
                 >
                   Create Account
@@ -163,9 +149,9 @@ export function Login() {
           )}
 
           {step === 'register' && (
-            <form onSubmit={handleSendOtp} className="space-y-4">
+            <form onSubmit={handleRegister} className="space-y-3 sm:space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="register-email">Email</Label>
+                <Label htmlFor="register-email" className="text-sm">Email</Label>
                 <Input
                   id="register-email"
                   type="email"
@@ -173,33 +159,12 @@ export function Login() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   disabled={loading}
-                  placeholder=""
+                  placeholder="your@email.com"
+                  className="text-sm sm:text-base"
                 />
               </div>
-              <Button type="submit" className="w-full" disabled={loading}>
-                {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Send Verification Code
-              </Button>
-              <div className="text-center mt-4">
-                <button
-                  type="button"
-                  onClick={() => setStep('login')}
-                  className="text-sm text-muted-foreground hover:underline"
-                  disabled={loading}
-                >
-                  Back to Login
-                </button>
-              </div>
-            </form>
-          )}
-
-          {step === 'otp' && (
-            <form onSubmit={handleRegister} className="space-y-4">
-              <p className="text-sm text-muted-foreground mb-4">
-                Complete your account setup
-              </p>
               <div className="space-y-2">
-                <Label htmlFor="username">Username</Label>
+                <Label htmlFor="username" className="text-sm">Username</Label>
                 <Input
                   id="username"
                   type="text"
@@ -208,10 +173,11 @@ export function Login() {
                   required
                   disabled={loading}
                   placeholder="Your name"
+                  className="text-sm sm:text-base"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="new-password">Password (min 6 characters)</Label>
+                <Label htmlFor="new-password" className="text-sm">Password (min 6 characters)</Label>
                 <Input
                   id="new-password"
                   type="password"
@@ -221,16 +187,23 @@ export function Login() {
                   disabled={loading}
                   placeholder="Create a password"
                   minLength={6}
+                  className="text-sm sm:text-base"
                 />
               </div>
-                  disabled={loading}
-                  placeholder="Create a password"
-                />
-              </div>
-              <Button type="submit" className="w-full" disabled={loading}>
-                {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Complete Registration
+              <Button type="submit" className="w-full text-sm sm:text-base" disabled={loading}>
+                {loading && <Loader2 className="mr-2 h-3 w-3 sm:h-4 sm:w-4 animate-spin" />}
+                Create Account
               </Button>
+              <div className="text-center mt-3 sm:mt-4">
+                <button
+                  type="button"
+                  onClick={() => setStep('login')}
+                  className="text-xs sm:text-sm text-muted-foreground hover:underline"
+                  disabled={loading}
+                >
+                  Back to Login
+                </button>
+              </div>
             </form>
           )}
         </CardContent>

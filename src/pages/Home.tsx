@@ -59,15 +59,15 @@ export function Home() {
     <div className="min-h-screen bg-[#EBE3DB]">
       <Hero />
 
-      <div className="container mx-auto px-4 py-12 md:py-20">
+      <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-8 sm:py-10 md:py-12 lg:py-20">
         {/* Search Bar */}
-        <div className="mb-16 flex flex-col items-center gap-4">
+        <div className="mb-10 sm:mb-12 md:mb-16 flex flex-col items-center gap-3 sm:gap-4">
           <div className="w-full max-w-2xl">
             <SearchBar onSearch={handleSearch} />
           </div>
           
           {activeFilters && (
-            <Button variant="ghost" size="sm" onClick={clearFilters}>
+            <Button variant="ghost" size="sm" onClick={clearFilters} className="text-xs sm:text-sm">
               Clear filters
             </Button>
           )}
@@ -75,15 +75,15 @@ export function Home() {
 
         {/* Featured Posts */}
         {!activeFilters && featuredPosts && featuredPosts.length > 0 && (
-          <section className="mb-20">
-            <div className="flex items-center gap-3 mb-10">
-              <div className="h-1 w-12 bg-primary rounded-full" />
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground flex items-center gap-3">
-                <BookOpen className="w-8 h-8 text-primary" />
+          <section className="mb-12 sm:mb-16 md:mb-20">
+            <div className="flex items-center gap-2 sm:gap-3 mb-6 sm:mb-8 md:mb-10">
+              <div className="h-0.5 sm:h-1 w-8 sm:w-10 md:w-12 bg-primary rounded-full" />
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground flex items-center gap-2 sm:gap-3">
+                <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 text-primary" />
                 Featured Teachings
               </h2>
             </div>
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 sm:gap-6 md:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {featuredPosts.map((post) => (
                 <PostCard key={post.id} post={post} />
               ))}
@@ -93,9 +93,9 @@ export function Home() {
 
         {/* Categories Filter */}
         {!activeFilters && categories && categories.length > 0 && (
-          <section className="mb-16">
-            <h3 className="text-xl md:text-2xl font-semibold text-foreground mb-6">Browse by Category</h3>
-            <div className="flex flex-wrap gap-3">
+          <section className="mb-10 sm:mb-12 md:mb-16">
+            <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-foreground mb-4 sm:mb-5 md:mb-6">Browse by Category</h3>
+            <div className="flex flex-wrap gap-2 sm:gap-2.5 md:gap-3">
               {categories.map((category) => (
                 <Button
                   key={category.id}
@@ -131,9 +131,9 @@ export function Home() {
 
         {/* All Posts */}
         <section>
-          <div className="flex items-center gap-3 mb-10">
-            <div className="h-1 w-12 bg-primary rounded-full" />
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+          <div className="flex items-center gap-2 sm:gap-3 mb-6 sm:mb-8 md:mb-10">
+            <div className="h-0.5 sm:h-1 w-8 sm:w-10 md:w-12 bg-primary rounded-full" />
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
               {categorySlug && 'Category: ' + categorySlug.replace(/-/g, ' ')}
               {tagSlug && 'Tag: ' + tagSlug.replace(/-/g, ' ')}
               {seriesSlug && 'Series: ' + seriesSlug.replace(/-/g, ' ')}
@@ -143,19 +143,19 @@ export function Home() {
           </div>
 
           {postsLoading ? (
-            <div className="flex justify-center py-12">
-              <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            <div className="flex justify-center py-8 sm:py-10 md:py-12">
+              <Loader2 className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 animate-spin text-primary" />
             </div>
           ) : posts && posts.length > 0 ? (
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 sm:gap-6 md:gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {posts.map((post) => (
                 <PostCard key={post.id} post={post} />
               ))}
             </div>
           ) : (
             <Card className="border-border/60">
-              <CardContent className="py-12 text-center">
-                <p className="text-muted-foreground">
+              <CardContent className="py-8 sm:py-10 md:py-12 text-center px-4">
+                <p className="text-sm sm:text-base text-muted-foreground">
                   {searchQuery ? 'No teachings found matching your search.' : 'No teachings available yet.'}
                 </p>
               </CardContent>

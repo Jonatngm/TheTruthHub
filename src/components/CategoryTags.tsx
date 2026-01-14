@@ -14,16 +14,16 @@ export function CategoryTags({ categories, tags, clickable = false }: CategoryTa
   }
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-1.5 sm:gap-2">
       {categories?.map((category) =>
         clickable ? (
           <Link key={category.id} to={`/?category=${category.slug}`}>
-            <Badge variant="secondary" className="cursor-pointer hover:bg-primary/20">
+            <Badge variant="secondary" className="cursor-pointer hover:bg-primary/20 text-xs sm:text-sm px-2 py-0.5 sm:px-2.5 sm:py-1">
               {category.name}
             </Badge>
           </Link>
         ) : (
-          <Badge key={category.id} variant="secondary">
+          <Badge key={category.id} variant="secondary" className="text-xs sm:text-sm px-2 py-0.5 sm:px-2.5 sm:py-1">
             {category.name}
           </Badge>
         )
@@ -31,12 +31,12 @@ export function CategoryTags({ categories, tags, clickable = false }: CategoryTa
       {tags?.map((tag) =>
         clickable ? (
           <Link key={tag.id} to={`/?tag=${tag.slug}`}>
-            <Badge variant="outline" className="cursor-pointer hover:border-primary">
+            <Badge variant="outline" className="cursor-pointer hover:border-primary text-xs sm:text-sm px-2 py-0.5 sm:px-2.5 sm:py-1">
               {tag.name}
             </Badge>
           </Link>
         ) : (
-          <Badge key={tag.id} variant="outline">
+          <Badge key={tag.id} variant="outline" className="text-xs sm:text-sm px-2 py-0.5 sm:px-2.5 sm:py-1">
             {tag.name}
           </Badge>
         )
