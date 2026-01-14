@@ -52,7 +52,7 @@ export function Header() {
             Contact
           </Link>
           
-          {user ? (
+          {user && (
             <>
               <Link
                 to="/admin"
@@ -71,13 +71,6 @@ export function Header() {
                 Logout
               </Button>
             </>
-          ) : (
-            // Show the login button for unsigned users (links to secret-login)
-            <Link to="/login">
-              <Button variant="default" size="sm">
-                Login
-              </Button>
-            </Link>
           )}
         </div>
       </nav>
