@@ -24,14 +24,33 @@ class AuthService {
       throw new Error('This email is not authorized to create an account');
     }
 
+    // Send OTP for email verification
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: { 
-        shouldCreateUser: true,
-        emailRedirectTo: window.location.origin + '/admin'
+        shouldCreateUser: false, // Don't create user yet
       },
     });
     if (error) throw error;
+  }
+
+  async signUpWithPassword(email: string, password: string, username: string) {
+    // Security: Only allow authorized emails
+    if (!AUTHORIZED_EMAILS.includes(email.toLowerCase())) {
+      throw new Error('This email is not authorized to create an account');
+    }
+
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { username },
+        emailRedirectTo: window.location.origin + '/admin'
+      }
+    });
+    
+    if (error) throw error;
+    return data.user;
   }
 
   async verifyOtpAndSetPassword(email: string, token: string, password: string, username: string) {

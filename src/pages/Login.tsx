@@ -82,14 +82,24 @@ export function Login() {
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (password.length < 6) {
+      toast.error('Password must be at least 6 characters');
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const user = await authService.verifyOtpAndSetPassword(email, otp, password, username);
-      login(authService.mapUser(user));
-      navigate('/admin');
+      const user = await authService.signUpWithPassword(email, password, username);
+      if (user) {
+        login(authService.mapUser(user));
+        toast.success('Account created! You can now login with your password.');
+        navigate('/admin');
+      }
     } catch (error: any) {
       toast.error(error.message || 'Registration failed');
+    } finally {
       setLoading(false);
     }
   };
@@ -185,19 +195,9 @@ export function Login() {
 
           {step === 'otp' && (
             <form onSubmit={handleRegister} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="otp">Verification Code</Label>
-                <Input
-                  id="otp"
-                  type="text"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
-                  required
-                  disabled={loading}
-                  placeholder="Enter 4-digit code"
-                  maxLength={4}
-                />
-              </div>
+              <p className="text-sm text-muted-foreground mb-4">
+                Complete your account setup
+              </p>
               <div className="space-y-2">
                 <Label htmlFor="username">Username</Label>
                 <Input
@@ -211,13 +211,18 @@ export function Login() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="new-password">Password</Label>
+                <Label htmlFor="new-password">Password (min 6 characters)</Label>
                 <Input
                   id="new-password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
+                  disabled={loading}
+                  placeholder="Create a password"
+                  minLength={6}
+                />
+              </div>
                   disabled={loading}
                   placeholder="Create a password"
                 />
