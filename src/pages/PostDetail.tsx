@@ -157,15 +157,20 @@ export function PostDetail() {
 
   const contentWithLinks = linkScriptures(post.content);
   return (
-    <div className="min-h-screen">
-      {/* Cover image */}
+    <div className="min-h-screen bg-gradient-to-b from-background to-[#EBE3DB]">
+      {/* Cover image with enhanced presentation */}
       {post.cover_image && (
-        <div className="w-full h-48 sm:h-64 md:h-72 lg:h-96 mb-6 sm:mb-8 overflow-hidden">
+        <div className="relative w-full h-56 sm:h-72 md:h-96 lg:h-[500px] mb-0 overflow-hidden shadow-lg">
           <img
             src={post.cover_image}
             alt={post.title}
             className="w-full h-full object-cover"
+            loading="eager"
           />
+          {/* Elegant gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+          {/* Optional decorative element */}
+          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background via-background/80 to-transparent" />
         </div>
       )}
 
