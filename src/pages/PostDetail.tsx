@@ -157,19 +157,24 @@ export function PostDetail() {
 
   const contentWithLinks = linkScriptures(post.content);
   return (
-    <div className="min-h-screen bg-[#EBE3DB]">
+    <div className="min-h-screen bg-[#FBFBFA]">
       {/* Cover image with enhanced presentation */}
       {post.cover_image && (
-        <div className="w-full h-56 sm:h-72 md:h-80 mb-6 overflow-hidden">
+        <div className="relative w-full h-56 sm:h-72 md:h-96 lg:h-[500px] mb-0 overflow-hidden shadow-lg">
           <img
             src={post.cover_image}
             alt={post.title}
             className="w-full h-full object-cover"
+            loading="eager"
           />
+          {/* Elegant gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+          {/* Optional decorative element */}
+          <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background via-background/80 to-transparent" />
         </div>
       )}
 
-      <article ref={articleRef} className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 py-10 sm:py-14 md:py-16 max-w-4xl">
+      <article ref={articleRef} className="container mx-auto px-3 sm:px-4 md:px-6 py-8 sm:py-12 md:py-16 max-w-3xl">
         <Link to="/">
           <Button variant="ghost" className="mb-6 sm:mb-8 text-sm sm:text-base">
             <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
