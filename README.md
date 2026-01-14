@@ -36,3 +36,4 @@ cp dist/index.html dist/404.html
 
 If you'd like, I can attempt to enable Pages via the GitHub API (I previously hit a permissions error). To do that I need a token with `repo` + `pages:write` scopes or you can enable Pages in the UI.
 # Deployment trigger
+# Deploy
