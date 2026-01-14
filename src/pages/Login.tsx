@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/stores/authStore';
 import { authService } from '@/lib/authService';
+import { supabase } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -19,6 +20,17 @@ export function Login() {
   const [password, setPassword] = useState('');
   const [otp, setOtp] = useState('');
   const [username, setUsername] = useState('');
+
+  // Handle magic link authentication
+  useEffect(() => {
+    supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        login(authService.mapUser(session.user));
+        toast.success('Successfully logged in!');
+        navigate('/admin');
+      }
+    });
+  }, [navigate, login]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
