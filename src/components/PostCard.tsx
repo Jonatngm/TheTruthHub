@@ -20,13 +20,13 @@ export function PostCard({ post }: PostCardProps) {
 
   return (
     <Link to={`/post/${post.id}`} className="group block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-lg transition-all duration-200">
-      <Card className="h-full transition-all duration-300 ease-out border-border/60 overflow-hidden hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 hover:border-primary/30 group-focus-visible:shadow-xl group-focus-visible:-translate-y-1">
+      <Card className="h-full transition-all duration-300 ease-out border-border/60 overflow-hidden hover:shadow-lg hover:border-primary/30 group-focus-visible:shadow-lg">
         {post.cover_image && (
           <div className="relative w-full h-40 sm:h-48 md:h-56 overflow-hidden bg-muted">
             <img
               src={post.cover_image}
               alt={post.title}
-              className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+              className="w-full h-full object-cover transition-transform duration-300 ease-out"
               loading="lazy"
             />
             {/* Subtle overlay on hover */}
