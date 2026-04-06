@@ -34,7 +34,7 @@ export function Contact() {
             </CardHeader>
             <CardContent>
               <a
-                href="mailto:victor@truthhub.blog"
+                href="mailto:th3truthhub@gmail.com"
                 className="text-sm sm:text-base text-primary hover:underline break-all"
               >
                 th3truthhub@gmail.com
