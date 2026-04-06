@@ -37,7 +37,7 @@ export function Contact() {
                 href="mailto:victor@truthhub.blog"
                 className="text-sm sm:text-base text-primary hover:underline break-all"
               >
-                victor@truthhub.blog
+                th3truthhub@gmail.com
               </a>
             </CardContent>
           </Card>
